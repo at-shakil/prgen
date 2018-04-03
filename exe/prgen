@@ -1,0 +1,28 @@
+#!/usr/bin/env ruby
+require "thor"
+require "prgen"
+
+class PRGen::CLI < Thor
+  desc "setup <redmine_issue_id> <github_pr_id>", "Setup generator context"
+  def setup issue_id, pr_id
+  	puts "Error: Not yet implemented!"
+  end
+
+  desc "copy", "Prepare PR message for chatwork and copy to system clipboard"
+  def copy issue_id, pr_id
+  	data = PRGen::Generator.new(issue_id, pr_id).render
+  	Clipboard.copy data[:message]
+		return unless RUBY_PLATFORM =~ /linux/
+		if data[:has_template]
+			title = "Message Ready!"
+			message = "Chatwork message for\nTask: \##{issue_id}\nPR: \##{
+				pr_id}\n is now ready to launch!"
+		else
+			title = "No template!"
+			message = "Please provide a message template."
+		end
+		system("notify-send --urgency=normal \"#{title}\" \"#{message}\"")
+  end
+end
+
+PRGen::CLI.start ARGV

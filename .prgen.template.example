@@ -1,0 +1,8 @@
+[To:0000001] Lord Voldemort
+
+[info][title]PULL #<%= task_id %>[/title]Redmine:
+  - https://voldemortcorp.com/redmine/issues/<%= task_id %>
+
+GitHub:
+  - https://github.com/voldemortcorp/test1/pull/<%= pr_id %>
+[/info]
